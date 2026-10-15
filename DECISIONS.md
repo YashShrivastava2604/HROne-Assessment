@@ -1,6 +1,19 @@
-# DECISIONS.md  (about 150-200 words in total - plain language, your own words)
-1. **Indexes.** Which indexes did you create, and which query or guarantee does each one serve? Which one did you consider and reject?
-2. **Punch-in race.** Two identical punch-in requests arrive at the same instant. Walk through exactly what happens in your code.
-3. **Ties.** Two employees are tied on late minutes at the cutoff of `limit`. What does your leaderboard return, and why?
-4. **Headcount.** How does your department summary make sure employees with zero logs are counted?
-5. **One thing you would change** if this had to serve 100x the data.
+## 1. Indexes
+
+I created a unique index on `employees.emp_code` to enforce employee identity, and a unique compound index on `attendance_logs (emp_code, date)` to prevent duplicate attendance records. Additional indexes support department-filtered employee listings and attendance filtering and sorting. I will verify their effectiveness using execution statistics and adjust them if the final query plans need it.
+
+## 2. Punch-in race condition
+
+An application-level existence check cannot prevent two simultaneous requests from inserting the same record. The unique compound index is the final safeguard. One insert succeeds; duplicate inserts raise `DuplicateKeyError`, which the API converts to HTTP 409.
+
+## 3. Leaderboard ties
+
+I will use MongoDB's competition ranking so equal late-minute totals receive the same rank and the next rank is skipped. I will apply the limit after ranking and include all employees tied at the cutoff, ordering tied results by `emp_code`.
+
+## 4. Department headcount
+
+The department summary will start with employees eligible by the reporting period's end, then join attendance records. This includes eligible employees with no logs and excludes employees who joined later. Averages will be calculated across attendance records, not by averaging employee averages.
+
+## 5. Scaling
+
+For 100 times the data, I would inspect execution statistics, benchmark aggregation pipelines, and tune indexes. If analytics became too expensive, I would evaluate precomputed summaries while preserving correctness for new and regularized records.
