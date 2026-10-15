@@ -1,43 +1,20 @@
-# Byte-compiled / optimized / DLL files
+# 1. Block Virtual Environments & Local Dependencies
+.venv/
+venv/
+ENV/
+
+# 2. Block Python Runtime Cache files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments and Virtual Environments
+# 3. Block Secrets, Environment Variables & Configs
 .env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+.env.example
 
-# Testing and Coverage
-htmlcov/
-.pytest_cache/
-.coverage
-.coverage.*
-nosetests.xml
-coverage.xml
-*.cover
-
-# Logging and Databases
-*.log
-db.sqlite3
-db.sqlite3-journal
-
-# Framework specific (Django / Flask / FastAPI)
-local_settings.py
-instance/
-.webassets-cache
-
-# Package management and builds
-build/
-dist/
-*.egg-info/
-.eggs/
-eggs/
-
-# OS-generated files
-.DS_Store
-Thumbs.db
+# 4. Block Candidate Interview Data & Templates
+sample_data/
+sample_seed.py
+DATA_MODEL.md
+openapi.yaml
+PROBLEM_STATEMENT.docx
