@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments and Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing and Coverage
+htmlcov/
+.pytest_cache/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+
+# Logging and Databases
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Framework specific (Django / Flask / FastAPI)
+local_settings.py
+instance/
+.webassets-cache
+
+# Package management and builds
+build/
+dist/
+*.egg-info/
+.eggs/
+eggs/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
